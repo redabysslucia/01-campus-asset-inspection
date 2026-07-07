@@ -1,0 +1,89 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum AssetStatus {
+  ACTIVE
+  PENDING_INSPECTION
+  MAINTENANCE
+  RETIRED
+}
+
+enum InspectionResult {
+  NORMAL
+  ABNORMAL
+}
+
+enum WorkOrderStatus {
+  PENDING_ACCEPT
+  PENDING_ASSIGN
+  PENDING_PROCESS
+  PROCESSING
+  PENDING_CONFIRM
+  DONE
+  CANCELLED
+  FEEDBACK
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  role      String
+  createdAt DateTime @default(now())
+}
+
+model Asset {
+  id           String             @id @default(cuid())
+  code         String             @unique
+  name         String
+  category     String
+  model        String?
+  location     String
+  status       AssetStatus        @default(ACTIVE)
+  purchaseDate DateTime?
+  warrantyEnd  DateTime?
+  qrCode       String?
+  inspections  InspectionRecord[]
+  workOrders   WorkOrder[]
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+}
+
+model InspectionRecord {
+  id          String           @id @default(cuid())
+  assetId     String
+  asset       Asset            @relation(fields: [assetId], references: [id])
+  inspectorId String
+  result      InspectionResult
+  description String?
+  photos      String[]
+  workOrderId String?
+  conductedAt DateTime         @default(now())
+}
+
+model WorkOrder {
+  id          String          @id @default(cuid())
+  code        String          @unique
+  assetId     String
+  asset       Asset           @relation(fields: [assetId], references: [id])
+  title       String
+  description String
+  status      WorkOrderStatus @default(PENDING_ACCEPT)
+  reporterId  String?
+  handlerId   String?
+  result      String?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+}
+
+model AssetLog {
+  id        String   @id @default(cuid())
+  target    String
+  content   String
+  createdAt DateTime @default(now())
+}

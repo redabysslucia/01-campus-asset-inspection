@@ -1,0 +1,18 @@
+{
+  "name": "campus-asset-inspection",
+  "version": "1.0.0",
+  "private": true,
+  "description": "校园资产智慧巡检与全生命周期管理平台 - 实践周答辩演示版",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "campus",
+    "work-order",
+    "asset",
+    "inspection"
+  ],
+  "author": "Lishui University Practice Week",
+  "license": "MIT"
+}
