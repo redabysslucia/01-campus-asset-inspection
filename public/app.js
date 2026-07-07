@@ -4,7 +4,8 @@ const roleMap = {
   admin: { name: "资产管理员", desc: "资产入库、受理异常、派单与报废处置" },
   inspector: { name: "巡检员", desc: "执行巡检计划，提交正常或异常记录" },
   worker: { name: "维修人员", desc: "接收维修任务，开始处理并提交结果" },
-  reporter: { name: "师生用户", desc: "直接报修、查看工单、确认完成或反馈未解决" }
+  reporter: { name: "师生用户", desc: "直接报修、查看工单、确认完成或反馈未解决" },
+  dba: { name: "数据库管理员", desc: "用户角色管理、数据备份恢复、审计与系统配置" }
 };
 
 const statusMap = {
@@ -295,6 +296,11 @@ function loginScreen() {
   document.querySelectorAll("[data-login]").forEach(btn => {
     btn.addEventListener("click", () => {
       currentRole = btn.dataset.login;
+      if (currentRole === "dba") {
+        if (typeof window.openDbaPanel === "function") window.openDbaPanel();
+        else alert("数据库管理员模块加载失败，请刷新页面。");
+        return;
+      }
       activeView = "dashboard";
       render();
     });
@@ -873,6 +879,7 @@ function showAssetDetail(assetId) {
 
 function render() {
   if (!currentRole) return loginScreen();
+  if (currentRole === "dba") return; // DBA uses its own panel, not app shell
   document.querySelectorAll(".modal-mask").forEach(m => m.remove());
   const views = { dashboard: dashboardView, assets: assetsView, inspection: inspectionView, orders: ordersView, logs: logsView };
   views[activeView]();

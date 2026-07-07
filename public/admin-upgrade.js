@@ -731,7 +731,11 @@
 
   async function handleAction(button) {
     const action = button.dataset.action;
-    if (action === "close") $(".db-admin-mask").classList.remove("open");
+    if (action === "close") {
+      $(".db-admin-mask").classList.remove("open");
+      if (typeof currentRole !== "undefined") currentRole = null;
+      if (typeof loginScreen === "function") loginScreen();
+    }
     if (action === "asset-search") {
       sessionStorage.setItem("asset-filter", $("#assetSearch")?.value || "");
       sessionStorage.setItem("asset-status-filter", $("#assetStatusFilter")?.value || "");
@@ -884,19 +888,21 @@
     form.elements.password.value = "123456";
   }
 
-  function install() {
-    const launch = document.createElement("button");
-    launch.className = "db-admin-launch";
-    launch.textContent = "数据库管理员";
-    launch.addEventListener("click", async () => {
-      await loadState();
+  function openPanel() {
+    loadState().then(async () => {
       await refreshBackups().catch(() => {});
       renderPanel();
       $(".db-admin-mask").classList.add("open");
     });
+  }
+
+  function install() {
     const mask = document.createElement("div");
     mask.className = "db-admin-mask";
-    document.body.append(launch, mask);
+    document.body.append(mask);
+
+    // Expose for app.js role login
+    window.openDbaPanel = openPanel;
 
     document.addEventListener("submit", event => {
       validateWorkorderLogin(event);

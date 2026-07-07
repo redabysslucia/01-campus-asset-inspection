@@ -109,7 +109,7 @@
       "category": "网络设备",
       "model": "S5720",
       "location": "信息中心-机房",
-      "status": "MAINTENANCE",
+      "status": "ACTIVE",
       "purchaseDate": "2022-03-18",
       "warrantyEnd": "2027-03-18",
       "owner": "信息中心",
@@ -122,7 +122,7 @@
       "category": "教室设备",
       "model": "PX701",
       "location": "实验楼-B206",
-      "status": "MAINTENANCE",
+      "status": "ACTIVE",
       "purchaseDate": "2025-01-10",
       "warrantyEnd": "2028-01-10",
       "owner": "实验中心",
@@ -221,12 +221,12 @@
       "assetId": "a-101",
       "title": "多媒体中控台用户报修",
       "description": "啊啊啊",
-      "status": "PENDING_CONFIRM",
+      "status": "DONE",
       "reporter": "张同学",
       "handler": "王维修",
       "result": "fasfa",
       "createdAt": "2026/7/7 15:54:01",
-      "updatedAt": "2026/7/7 16:10:22",
+      "updatedAt": "2026/7/7 16:25:25",
       "priority": "中",
       "laborHours": 1
     },
@@ -236,12 +236,12 @@
       "assetId": "a-104",
       "title": "实验室投影仪用户报修",
       "description": "asdasda",
-      "status": "PENDING_CONFIRM",
+      "status": "DONE",
       "reporter": "张同学",
       "handler": "王维修",
       "result": "fsafasg",
       "createdAt": "2026/7/7 15:57:10",
-      "updatedAt": "2026/7/7 16:10:25",
+      "updatedAt": "2026/7/7 16:25:27",
       "priority": "中",
       "laborHours": 1
     },
@@ -251,14 +251,27 @@
       "assetId": "a-103",
       "title": "核心交换机用户报修",
       "description": "gvdgsga",
-      "status": "PENDING_CONFIRM",
+      "status": "DONE",
       "reporter": "张同学",
       "handler": "王维修",
       "result": "sagasgas",
       "createdAt": "2026/7/7 15:57:43",
-      "updatedAt": "2026/7/7 16:10:27",
+      "updatedAt": "2026/7/7 16:25:28",
       "priority": "中",
       "laborHours": 1
+    },
+    {
+      "id": "wo-mradwv72-jaagr",
+      "code": "WO-20260707-006",
+      "assetId": "a-101",
+      "title": "多媒体中控台用户报修",
+      "description": "aaa",
+      "status": "PENDING_CONFIRM",
+      "reporter": "数据库管理员",
+      "handler": "王维修",
+      "result": "faas",
+      "createdAt": "2026/7/7 16:26:03",
+      "updatedAt": "2026/7/7 16:27:18"
     }
   ],
   "logs": [
@@ -453,6 +466,54 @@
       "target": "WO-20260707-005",
       "content": "维修人员 执行操作：待确认",
       "time": "2026/7/7 16:10:27"
+    },
+    {
+      "id": "log-mradw2d5-v8kq5",
+      "target": "WO-20260707-003",
+      "content": "师生用户 执行操作：已完成",
+      "time": "2026/7/7 16:25:26"
+    },
+    {
+      "id": "log-mradw385-rjbbj",
+      "target": "WO-20260707-004",
+      "content": "师生用户 执行操作：已完成",
+      "time": "2026/7/7 16:25:27"
+    },
+    {
+      "id": "log-mradw3y7-n0ftt",
+      "target": "WO-20260707-005",
+      "content": "师生用户 执行操作：已完成",
+      "time": "2026/7/7 16:25:28"
+    },
+    {
+      "id": "log-mradwv72-l1bqh",
+      "target": "WO-20260707-006",
+      "content": "师生用户 数据库管理员 提交报修：aaa",
+      "time": "2026/7/7 16:26:03"
+    },
+    {
+      "id": "log-mradx7is-ax5l9",
+      "target": "WO-20260707-006",
+      "content": "资产管理员 执行操作：待派单",
+      "time": "2026/7/7 16:26:19"
+    },
+    {
+      "id": "log-mradx8kz-rayvv",
+      "target": "WO-20260707-006",
+      "content": "资产管理员 执行操作：待处理",
+      "time": "2026/7/7 16:26:20"
+    },
+    {
+      "id": "log-mradye0t-32k9s",
+      "target": "WO-20260707-006",
+      "content": "维修人员 执行操作：处理中",
+      "time": "2026/7/7 16:27:14"
+    },
+    {
+      "id": "log-mradyh40-2j1pa",
+      "target": "WO-20260707-006",
+      "content": "维修人员 执行操作：待确认",
+      "time": "2026/7/7 16:27:18"
     }
   ],
   "notifications": [
@@ -641,6 +702,54 @@
       "title": "工单状态更新",
       "content": "WO-20260707-005 已变更为 待确认",
       "time": "2026/7/7 16:10:27"
+    },
+    {
+      "id": "notice-mradw2d5-a0lep",
+      "title": "工单状态更新",
+      "content": "WO-20260707-003 已变更为 已完成",
+      "time": "2026/7/7 16:25:26"
+    },
+    {
+      "id": "notice-mradw385-q1urc",
+      "title": "工单状态更新",
+      "content": "WO-20260707-004 已变更为 已完成",
+      "time": "2026/7/7 16:25:27"
+    },
+    {
+      "id": "notice-mradw3y7-oaukf",
+      "title": "工单状态更新",
+      "content": "WO-20260707-005 已变更为 已完成",
+      "time": "2026/7/7 16:25:28"
+    },
+    {
+      "id": "notice-mradwv73-93pv6",
+      "title": "用户报修",
+      "content": "多媒体中控台 报修工单 WO-20260707-006 已生成",
+      "time": "2026/7/7 16:26:03"
+    },
+    {
+      "id": "notice-mradx7is-by2u0",
+      "title": "工单状态更新",
+      "content": "WO-20260707-006 已变更为 待派单",
+      "time": "2026/7/7 16:26:19"
+    },
+    {
+      "id": "notice-mradx8l0-mtqqm",
+      "title": "工单状态更新",
+      "content": "WO-20260707-006 已变更为 待处理",
+      "time": "2026/7/7 16:26:20"
+    },
+    {
+      "id": "notice-mradye0t-r63z3",
+      "title": "工单状态更新",
+      "content": "WO-20260707-006 已变更为 处理中",
+      "time": "2026/7/7 16:27:14"
+    },
+    {
+      "id": "notice-mradyh40-45ttf",
+      "title": "工单状态更新",
+      "content": "WO-20260707-006 已变更为 待确认",
+      "time": "2026/7/7 16:27:18"
     }
   ],
   "roles": [
@@ -718,7 +827,7 @@
       "id": "audit-mr9951n8-5drpg",
       "action": "user.create",
       "target": "zhang",
-      "detail": "新增用户",
+      "detail": "新增���户",
       "time": "2026/7/6 21:24:40"
     },
     {
@@ -806,8 +915,8 @@
   },
   "meta": {
     "storage": "json-file",
-    "revision": 44,
-    "savedAt": "2026-07-07T08:10:27.693Z"
+    "revision": 52,
+    "savedAt": "2026-07-07T08:27:18.442Z"
   },
   "templates": [
     {
