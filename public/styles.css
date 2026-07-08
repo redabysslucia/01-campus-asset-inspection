@@ -507,6 +507,28 @@ textarea {
 
 /* ---- 新增增强样式 ---- */
 
+/* 登录注册表单 */
+.auth-form {
+  margin-top: 8px;
+}
+.auth-error {
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: #fef2f2;
+  color: #b91c1c;
+  font-size: 13px;
+}
+.auth-switch {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+}
+.auth-switch a {
+  color: var(--brand);
+  font-weight: 600;
+}
+
 /* 搜索筛选栏 */
 .filter-bar {
   display: flex;

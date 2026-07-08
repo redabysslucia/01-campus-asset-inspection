@@ -72,6 +72,15 @@
       "id": "u-mr9951n8-b5psc",
       "name": "张维修",
       "role": "worker"
+    },
+    {
+      "username": "lucia",
+      "password": "153246999A",
+      "status": "enabled",
+      "roleId": "role-reporter",
+      "id": "u-mrbd2g4d-8ng0z",
+      "name": "小吴",
+      "role": "reporter"
     }
   ],
   "assets": [
@@ -109,7 +118,7 @@
       "category": "网络设备",
       "model": "S5720",
       "location": "信息中心-机房",
-      "status": "ACTIVE",
+      "status": "MAINTENANCE",
       "purchaseDate": "2022-03-18",
       "warrantyEnd": "2027-03-18",
       "owner": "信息中心",
@@ -272,6 +281,19 @@
       "result": "faas",
       "createdAt": "2026/7/7 16:26:03",
       "updatedAt": "2026/7/7 16:27:18"
+    },
+    {
+      "id": "wo-mrbdz43u-4gryi",
+      "code": "WO-20260708-007",
+      "assetId": "a-103",
+      "title": "核心交换机用户报修",
+      "description": "问题",
+      "status": "PENDING_CONFIRM",
+      "reporter": "小吴",
+      "handler": "王维修",
+      "result": "111",
+      "createdAt": "2026/7/8 09:15:34",
+      "updatedAt": "2026/7/8 09:16:49"
     }
   ],
   "logs": [
@@ -514,6 +536,42 @@
       "target": "WO-20260707-006",
       "content": "维修人员 执行操作：待确认",
       "time": "2026/7/7 16:27:18"
+    },
+    {
+      "id": "log-mrbd2g4d-ays97",
+      "target": "lucia",
+      "content": "新用户注册：小吴（师生用户）",
+      "time": "2026/7/8 08:50:10"
+    },
+    {
+      "id": "log-mrbdz43v-kwvbr",
+      "target": "WO-20260708-007",
+      "content": "师生用户 小吴 提交报修：问题",
+      "time": "2026/7/8 09:15:34"
+    },
+    {
+      "id": "log-mrbe00lq-7hh7u",
+      "target": "WO-20260708-007",
+      "content": "资产管理员 执行操作：待派单",
+      "time": "2026/7/8 09:16:16"
+    },
+    {
+      "id": "log-mrbe0269-8mbzr",
+      "target": "WO-20260708-007",
+      "content": "资产管理员 执行操作：待处理",
+      "time": "2026/7/8 09:16:18"
+    },
+    {
+      "id": "log-mrbe0nc5-e5m2f",
+      "target": "WO-20260708-007",
+      "content": "维修人员 执行操作：处理中",
+      "time": "2026/7/8 09:16:45"
+    },
+    {
+      "id": "log-mrbe0q41-typ7b",
+      "target": "WO-20260708-007",
+      "content": "维修人员 执行操作：待确认",
+      "time": "2026/7/8 09:16:49"
     }
   ],
   "notifications": [
@@ -750,6 +808,42 @@
       "title": "工单状态更新",
       "content": "WO-20260707-006 已变更为 待确认",
       "time": "2026/7/7 16:27:18"
+    },
+    {
+      "id": "notice-mrbd2g4q-gg56n",
+      "title": "新用户注册",
+      "content": "小吴 注册成功",
+      "time": "2026/7/8 08:50:10"
+    },
+    {
+      "id": "notice-mrbdz43v-cdagp",
+      "title": "用户报修",
+      "content": "核心交换机 报修工单 WO-20260708-007 已生成",
+      "time": "2026/7/8 09:15:34"
+    },
+    {
+      "id": "notice-mrbe00lq-mncxl",
+      "title": "工单状态更新",
+      "content": "WO-20260708-007 已变更为 待派单",
+      "time": "2026/7/8 09:16:16"
+    },
+    {
+      "id": "notice-mrbe0269-rf3bj",
+      "title": "工单状态更新",
+      "content": "WO-20260708-007 已变更为 待处理",
+      "time": "2026/7/8 09:16:18"
+    },
+    {
+      "id": "notice-mrbe0nc5-29dbv",
+      "title": "工单状态更新",
+      "content": "WO-20260708-007 已变更为 处理中",
+      "time": "2026/7/8 09:16:45"
+    },
+    {
+      "id": "notice-mrbe0q41-anf0y",
+      "title": "工单状态更新",
+      "content": "WO-20260708-007 已变更为 待确认",
+      "time": "2026/7/8 09:16:49"
     }
   ],
   "roles": [
@@ -878,6 +972,20 @@
       "target": "WO-20260707-005",
       "detail": "维护分类、优先级和工时",
       "time": "2026/7/7 16:00:48"
+    },
+    {
+      "id": "audit-mrbdy1p5-wibh5",
+      "action": "user.resetPassword",
+      "target": "admin",
+      "detail": "重置密码",
+      "time": "2026/7/8 09:14:44"
+    },
+    {
+      "id": "audit-mrbe0ear-jwid8",
+      "action": "user.resetPassword",
+      "target": "worker",
+      "detail": "重置密码",
+      "time": "2026/7/8 09:16:34"
     }
   ],
   "systemLogs": [],
@@ -915,8 +1023,8 @@
   },
   "meta": {
     "storage": "json-file",
-    "revision": 52,
-    "savedAt": "2026-07-07T08:27:18.442Z"
+    "revision": 60,
+    "savedAt": "2026-07-08T01:16:49.594Z"
   },
   "templates": [
     {

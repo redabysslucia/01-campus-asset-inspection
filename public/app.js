@@ -268,7 +268,11 @@ function myLogs() {
   return list.filter(log => [...relevant].some(code => log.target === code || (log.content || "").includes(code)));
 }
 
+let authMode = "login";
+
 function loginScreen() {
+  const roleOptions = Object.entries(roleMap).filter(([key]) => key !== "dba").map(([key, item]) => `<option value="${key}">${item.name}</option>`).join("");
+  const isLogin = authMode === "login";
   app.innerHTML = `
     <main class="login-shell">
       <section class="hero">
@@ -280,31 +284,99 @@ function loginScreen() {
         </div>
       </section>
       <section class="login-panel">
-        <h2>选择演示角色</h2>
-        <p>答辩时按角色切换，演示“谁能做什么动作”。</p>
-        <div class="role-list">
-          ${Object.entries(roleMap).map(([key, item]) => `
-            <button class="role-card" data-login="${key}">
-              <strong>${item.name}</strong>
-              <span>${item.desc}</span>
-            </button>
-          `).join("")}
+        <h2>${isLogin ? "用户登录" : "用户注册"}</h2>
+        <p>${isLogin ? "请输入账号密码登录系统" : "填写信息创建新账号"}</p>
+        <form class="form auth-form" id="authForm">
+          ${isLogin ? "" : `<label>真实姓名<input name="regName" required placeholder="请输入姓名" autocomplete="name" /></label>`}
+          <label>账号<input name="authUsername" required placeholder="请输入账号" autocomplete="username" value="${isLogin ? (currentLoginSession()?.username || "") : ""}" /></label>
+          <label>密码<input name="authPassword" type="password" required placeholder="请输入密码" autocomplete="${isLogin ? "current-password" : "new-password"}" /></label>
+          ${isLogin ? "" : `<label>确认密码<input name="authConfirm" type="password" required placeholder="请再次输入密码" autocomplete="new-password" /></label>`}
+          <label>角色<select name="authRole" required>
+            <option value="">-- 请选择角色 --</option>
+            ${roleOptions}
+          </select></label>
+          <div id="authError" class="auth-error" style="display:none"></div>
+          <button class="primary" type="submit">${isLogin ? "登 录" : "注 册"}</button>
+        </form>
+        <div class="auth-switch">
+          ${isLogin ? `还没有账号？<a href="#" id="switchToRegister">立即注册</a>` : `已有账号？<a href="#" id="switchToLogin">去登录</a>`}
+        </div>
+        <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line);text-align:center">
+          <a href="#" id="switchToDba" style="color:var(--muted);font-size:13px">数据库管理员入口</a>
         </div>
       </section>
     </main>
   `;
-  document.querySelectorAll("[data-login]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      currentRole = btn.dataset.login;
-      if (currentRole === "dba") {
-        if (typeof window.openDbaPanel === "function") window.openDbaPanel();
-        else alert("数据库管理员模块加载失败，请刷新页面。");
-        return;
-      }
-      activeView = "dashboard";
-      render();
-    });
+  $("#authForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(e.currentTarget).entries());
+    const errorEl = $("#authError");
+    errorEl.style.display = "none";
+    try {
+      if (isLogin) handleLogin(data); else handleRegister(data);
+    } catch (err) {
+      errorEl.textContent = err.message;
+      errorEl.style.display = "block";
+    }
   });
+  $("#switchToRegister")?.addEventListener("click", e => { e.preventDefault(); authMode = "register"; loginScreen(); });
+  $("#switchToLogin")?.addEventListener("click", e => { e.preventDefault(); authMode = "login"; loginScreen(); });
+  $("#switchToDba")?.addEventListener("click", e => {
+    e.preventDefault();
+    if (typeof window.openDbaPanel === "function") window.openDbaPanel();
+    else alert("数据库管理员模块加载失败，请刷新页面。");
+  });
+}
+
+function handleLogin(data) {
+  const username = (data.authUsername || "").trim();
+  const password = (data.authPassword || "").trim();
+  const role = data.authRole;
+  if (!username) throw new Error("请输入账号");
+  if (!password) throw new Error("请输入密码");
+  if (!role) throw new Error("请选择角色");
+  const allUsers = Array.isArray(state?.users) ? state.users : [];
+  const defaultAccounts = [
+    { username: "admin", password: "admin123", role: "admin", name: "管理员", id: "u-admin", status: "enabled" },
+    { username: "inspector", password: "inspect123", role: "inspector", name: "巡检员", id: "u-inspector", status: "enabled" },
+    { username: "worker", password: "worker123", role: "worker", name: "维修员", id: "u-worker", status: "enabled" },
+    { username: "reporter", password: "user123", role: "reporter", name: "学生用户", id: "u-reporter", status: "enabled" }
+  ];
+  const candidates = [...allUsers, ...defaultAccounts.filter(d => !allUsers.some(u => u.username === d.username))];
+  const user = candidates.find(u => u.username === username && u.password === password && u.status !== "disabled");
+  if (!user) throw new Error("账号、密码或角色不匹配");
+  if (user.role !== role && !["dba", "admin"].includes(user.role)) throw new Error("所选角色与账号权限不符");
+  localStorage.setItem(assetLoginKey, JSON.stringify({ username: user.username, role: role, name: user.name || user.username, time: Date.now() }));
+  currentRole = role;
+  activeView = "dashboard";
+  render();
+}
+
+function handleRegister(data) {
+  const name = (data.regName || "").trim();
+  const username = (data.authUsername || "").trim();
+  const password = data.authPassword || "";
+  const confirm = data.authConfirm || "";
+  const role = data.authRole;
+  if (!name) throw new Error("请输入真实姓名");
+  if (!username || username.length < 3) throw new Error("账号至少 3 个字符");
+  if (!/^[a-zA-Z0-9_\u4e00-\u9fa5]+$/.test(username)) throw new Error("账号只能包含字母、数字、下划线或中文");
+  if (password.length < 8) throw new Error("密码至少 8 位");
+  if (!/[A-Za-z]/.test(password) || !/\d/.test(password)) throw new Error("密码必须包含字母和数字");
+  if (password !== confirm) throw new Error("两次密码不一致");
+  if (!role) throw new Error("请选择角色");
+  if (!Array.isArray(state?.users)) state.users = [];
+  if (state.users.some(u => u.username === username)) throw new Error("该账号已存在");
+  const newUser = { id: uid("u"), name, username, password, role, roleId: `role-${role}`, status: "enabled" };
+  state.users.unshift(newUser);
+  addLog(username, `新用户注册：${name}（${roleMap[role]?.name || role}）`);
+  notify("新用户注册", `${name} 注册成功`);
+  saveState().then(() => {
+    localStorage.setItem(assetLoginKey, JSON.stringify({ username, role, name, time: Date.now() }));
+    currentRole = role;
+    activeView = "dashboard";
+    render();
+  }).catch(err => { alert("注册失败：" + err.message); });
 }
 
 function shell(content) {
