@@ -56,24 +56,6 @@
       "role": "dba"
     },
     {
-      "username": "zhang",
-      "password": "12345678a",
-      "status": "enabled",
-      "roleId": "role-dba",
-      "id": "u-mr99458z-xv50v",
-      "name": "张维修",
-      "role": "dba"
-    },
-    {
-      "username": "zhang",
-      "password": "12345678a",
-      "status": "enabled",
-      "roleId": "role-worker",
-      "id": "u-mr9951n8-b5psc",
-      "name": "张维修",
-      "role": "worker"
-    },
-    {
       "username": "lucia",
       "password": "153246999A",
       "status": "enabled",
@@ -118,7 +100,7 @@
       "category": "网络设备",
       "model": "S5720",
       "location": "信息中心-机房",
-      "status": "MAINTENANCE",
+      "status": "ACTIVE",
       "purchaseDate": "2022-03-18",
       "warrantyEnd": "2027-03-18",
       "owner": "信息中心",
@@ -144,7 +126,7 @@
       "assetId": "a-101",
       "cycle": "每周",
       "inspector": "李巡检",
-      "nextDate": "2026-07-08"
+      "nextDate": "2026-07-15"
     },
     {
       "id": "p-2",
@@ -195,6 +177,33 @@
       "description": "123",
       "conductedAt": "2026/7/6 21:24:54",
       "workOrderId": "wo-mr995cea-ikjd5"
+    },
+    {
+      "id": "record-mrbex744-00k7w",
+      "assetId": "a-103",
+      "inspector": "李巡检",
+      "result": "ABNORMAL",
+      "description": "aaa",
+      "conductedAt": "2026/7/8 09:42:04",
+      "workOrderId": "wo-mrbex744-t8mw3"
+    },
+    {
+      "id": "record-mrbf944k-xs7ek",
+      "assetId": "a-101",
+      "inspector": "李巡检",
+      "result": "ABNORMAL",
+      "description": "啊啊啊",
+      "conductedAt": "2026/7/8 09:51:20",
+      "workOrderId": "wo-mrbf9448-28s94"
+    },
+    {
+      "id": "record-mrbfh9n3-dpmjm",
+      "assetId": "a-101",
+      "inspector": "李巡检",
+      "result": "ABNORMAL",
+      "description": "aaa",
+      "conductedAt": "2026/7/8 09:57:41",
+      "workOrderId": "wo-mrbfh9n2-eu663"
     }
   ],
   "workOrders": [
@@ -204,12 +213,12 @@
       "assetId": "a-103",
       "title": "核心交换机异常告警",
       "description": "巡检发现机柜温度偏高，交换机告警灯闪烁。",
-      "status": "PENDING_CONFIRM",
+      "status": "DONE",
       "reporter": "系统巡检",
       "handler": "王维修",
       "result": "a",
       "createdAt": "2026-07-05 15:40",
-      "updatedAt": "2026/7/7 15:58:43"
+      "updatedAt": "2026/7/8 09:57:27"
     },
     {
       "id": "wo-mr995cea-ikjd5",
@@ -288,12 +297,64 @@
       "assetId": "a-103",
       "title": "核心交换机用户报修",
       "description": "问题",
-      "status": "PENDING_CONFIRM",
+      "status": "DONE",
       "reporter": "小吴",
       "handler": "王维修",
       "result": "111",
       "createdAt": "2026/7/8 09:15:34",
-      "updatedAt": "2026/7/8 09:16:49"
+      "updatedAt": "2026/7/8 09:36:04"
+    },
+    {
+      "id": "wo-mrbeppyv-rvdc0",
+      "code": "WO-20260708-008",
+      "assetId": "a-103",
+      "title": "核心交换机用户报修",
+      "description": "何意味",
+      "status": "FEEDBACK",
+      "reporter": "小吴",
+      "handler": "王维修",
+      "result": "hyw",
+      "createdAt": "2026/7/8 09:36:15",
+      "updatedAt": "2026/7/8 09:37:09"
+    },
+    {
+      "id": "wo-mrbex744-t8mw3",
+      "code": "WO-20260708-009",
+      "assetId": "a-103",
+      "title": "核心交换机巡检异常",
+      "description": "aaa",
+      "status": "DONE",
+      "reporter": "系统巡检",
+      "handler": "王维修",
+      "result": "bbb",
+      "createdAt": "2026/7/8 09:42:04",
+      "updatedAt": "2026/7/8 09:57:28"
+    },
+    {
+      "id": "wo-mrbf9448-28s94",
+      "code": "WO-20260708-010",
+      "assetId": "a-101",
+      "title": "多媒体中控台巡检异常",
+      "description": "啊啊啊",
+      "status": "DONE",
+      "reporter": "系统巡检",
+      "handler": "王维修",
+      "result": "呜呜呜",
+      "createdAt": "2026/7/8 09:51:20",
+      "updatedAt": "2026/7/8 09:57:29"
+    },
+    {
+      "id": "wo-mrbfh9n2-eu663",
+      "code": "WO-20260708-011",
+      "assetId": "a-101",
+      "title": "多媒体中控台巡检异常",
+      "description": "aaa",
+      "status": "FEEDBACK",
+      "reporter": "系统巡检",
+      "handler": "王维修",
+      "result": "bbbbbbb",
+      "createdAt": "2026/7/8 09:57:41",
+      "updatedAt": "2026/7/8 09:58:19"
     }
   ],
   "logs": [
@@ -572,6 +633,162 @@
       "target": "WO-20260708-007",
       "content": "维修人员 执行操作：待确认",
       "time": "2026/7/8 09:16:49"
+    },
+    {
+      "id": "log-mrbeph8g-qbopa",
+      "target": "WO-20260708-007",
+      "content": "师生用户 执行操作：已完成",
+      "time": "2026/7/8 09:36:04"
+    },
+    {
+      "id": "log-mrbeppyw-72434",
+      "target": "WO-20260708-008",
+      "content": "师生用户 小吴 提交报修：何意味",
+      "time": "2026/7/8 09:36:15"
+    },
+    {
+      "id": "log-mrbeq3l5-48sju",
+      "target": "WO-20260708-008",
+      "content": "资产管理员 执行操作：待派单",
+      "time": "2026/7/8 09:36:33"
+    },
+    {
+      "id": "log-mrbeq5a2-32d1c",
+      "target": "WO-20260708-008",
+      "content": "资产管理员 执行操作：待处理",
+      "time": "2026/7/8 09:36:35"
+    },
+    {
+      "id": "log-mrbeqcx8-b0bwr",
+      "target": "WO-20260708-008",
+      "content": "维修人员 执行操作：处理中",
+      "time": "2026/7/8 09:36:45"
+    },
+    {
+      "id": "log-mrbeqfcn-k9z4g",
+      "target": "WO-20260708-008",
+      "content": "维修人员 执行操作：待确认",
+      "time": "2026/7/8 09:36:48"
+    },
+    {
+      "id": "log-mrbeqvna-4jf6e",
+      "target": "WO-20260708-008",
+      "content": "师生用户 执行操作：反馈未解决",
+      "time": "2026/7/8 09:37:09"
+    },
+    {
+      "id": "log-mrbex744-7f9ti",
+      "target": "AS-2026-003",
+      "content": "异常巡检生成工单 WO-20260708-009",
+      "time": "2026/7/8 09:42:04"
+    },
+    {
+      "id": "log-mrbexktq-cavdn",
+      "target": "WO-20260708-009",
+      "content": "资产管理员 执行操作：待派单",
+      "time": "2026/7/8 09:42:22"
+    },
+    {
+      "id": "log-mrbexlqy-u2b5c",
+      "target": "WO-20260708-009",
+      "content": "资产管理员 执行操作：待处理",
+      "time": "2026/7/8 09:42:23"
+    },
+    {
+      "id": "log-mrbexuxy-xyd41",
+      "target": "WO-20260708-009",
+      "content": "维修人员 执行操作：处理中",
+      "time": "2026/7/8 09:42:35"
+    },
+    {
+      "id": "log-mrbexwub-pravm",
+      "target": "WO-20260708-009",
+      "content": "维修人员 执行操作：待确认",
+      "time": "2026/7/8 09:42:37"
+    },
+    {
+      "id": "log-mrbf944k-uynb6",
+      "target": "AS-2026-001",
+      "content": "异常巡检生成工单 WO-20260708-010",
+      "time": "2026/7/8 09:51:20"
+    },
+    {
+      "id": "log-mrbf9rna-2tmsk",
+      "target": "WO-20260708-010",
+      "content": "资产管理员 执行操作：待派单",
+      "time": "2026/7/8 09:51:51"
+    },
+    {
+      "id": "log-mrbf9svp-7utr9",
+      "target": "WO-20260708-010",
+      "content": "资产管理员 执行操作：待处理",
+      "time": "2026/7/8 09:51:52"
+    },
+    {
+      "id": "log-mrbfa1ll-yrqps",
+      "target": "WO-20260708-010",
+      "content": "维修人员 执行操作：处理中",
+      "time": "2026/7/8 09:52:03"
+    },
+    {
+      "id": "log-mrbfaizn-hac9j",
+      "target": "WO-20260708-010",
+      "content": "维修人员 执行操作：待确认",
+      "time": "2026/7/8 09:52:26"
+    },
+    {
+      "id": "log-mrbfgz4j-doo8a",
+      "target": "WO-20260705-001",
+      "content": "巡检员 执行操作：已完成",
+      "time": "2026/7/8 09:57:27"
+    },
+    {
+      "id": "log-mrbfgzs3-qazt8",
+      "target": "WO-20260708-009",
+      "content": "巡检员 执行操作：已完成",
+      "time": "2026/7/8 09:57:28"
+    },
+    {
+      "id": "log-mrbfh0e4-4kh54",
+      "target": "WO-20260708-010",
+      "content": "巡检员 执行操作：已完成",
+      "time": "2026/7/8 09:57:29"
+    },
+    {
+      "id": "log-mrbfh9n3-yry9z",
+      "target": "AS-2026-001",
+      "content": "异常巡检生成工单 WO-20260708-011",
+      "time": "2026/7/8 09:57:41"
+    },
+    {
+      "id": "log-mrbfhj53-zv4ae",
+      "target": "WO-20260708-011",
+      "content": "资产管理员 执行操作：待派单",
+      "time": "2026/7/8 09:57:53"
+    },
+    {
+      "id": "log-mrbfhk5l-t9z3k",
+      "target": "WO-20260708-011",
+      "content": "资产管理员 执行操作：待处理",
+      "time": "2026/7/8 09:57:54"
+    },
+    {
+      "id": "log-mrbfhs33-giryw",
+      "target": "WO-20260708-011",
+      "content": "维修人员 执行操作：处理中",
+      "time": "2026/7/8 09:58:04"
+    },
+    {
+      "id": "log-mrbfhu9k-vn6hq",
+      "target": "WO-20260708-011",
+      "content": "维修人员 执行操作：待确认",
+      "time": "2026/7/8 09:58:07"
+    },
+    {
+      "id": "log-mrbfi3a5-ld8x9",
+      "target": "WO-20260708-011",
+      "content": "巡检员 执行操作：反馈未解决",
+      "time": "2026/7/8 09:58:19"
     }
   ],
   "notifications": [
@@ -704,7 +921,7 @@
     {
       "id": "notice-mradbn8h-3leh7",
       "title": "工单状态更新",
-      "content": "WO-20260707-004 已变更为 待派单",
+      "content": "WO-20260707-004 已变更为 待派���",
       "time": "2026/7/7 16:09:33"
     },
     {
@@ -782,7 +999,7 @@
     {
       "id": "notice-mradwv73-93pv6",
       "title": "用户报修",
-      "content": "多媒体中控台 报修工单 WO-20260707-006 已生成",
+      "content": "多媒体中控台 报修工单 WO-20260707-006 已生���",
       "time": "2026/7/7 16:26:03"
     },
     {
@@ -844,6 +1061,162 @@
       "title": "工单状态更新",
       "content": "WO-20260708-007 已变更为 待确认",
       "time": "2026/7/8 09:16:49"
+    },
+    {
+      "id": "notice-mrbeph8g-g1tx4",
+      "title": "工单状态更新",
+      "content": "WO-20260708-007 已变更为 已完成",
+      "time": "2026/7/8 09:36:04"
+    },
+    {
+      "id": "notice-mrbeppyw-tjewq",
+      "title": "用户报修",
+      "content": "核心交换机 报修工单 WO-20260708-008 已生成",
+      "time": "2026/7/8 09:36:15"
+    },
+    {
+      "id": "notice-mrbeq3l5-6ixih",
+      "title": "工单状态更新",
+      "content": "WO-20260708-008 已变更为 待派单",
+      "time": "2026/7/8 09:36:33"
+    },
+    {
+      "id": "notice-mrbeq5a2-lkld3",
+      "title": "工单状态更新",
+      "content": "WO-20260708-008 已变更为 待处理",
+      "time": "2026/7/8 09:36:35"
+    },
+    {
+      "id": "notice-mrbeqcx8-nthu8",
+      "title": "工单状态更新",
+      "content": "WO-20260708-008 已变更为 处理中",
+      "time": "2026/7/8 09:36:45"
+    },
+    {
+      "id": "notice-mrbeqfcn-vjfk3",
+      "title": "工单状态更新",
+      "content": "WO-20260708-008 已变更为 待确认",
+      "time": "2026/7/8 09:36:48"
+    },
+    {
+      "id": "notice-mrbeqvna-eiw5c",
+      "title": "工单状态更新",
+      "content": "WO-20260708-008 已变更为 反馈未解决",
+      "time": "2026/7/8 09:37:09"
+    },
+    {
+      "id": "notice-mrbex744-uioid",
+      "title": "异常巡检",
+      "content": "核心交换机 已自动生成维修工单 WO-20260708-009",
+      "time": "2026/7/8 09:42:04"
+    },
+    {
+      "id": "notice-mrbexktq-o6r8i",
+      "title": "工单状态更新",
+      "content": "WO-20260708-009 已变更为 待派单",
+      "time": "2026/7/8 09:42:22"
+    },
+    {
+      "id": "notice-mrbexlqy-aq2vv",
+      "title": "工单状态更新",
+      "content": "WO-20260708-009 已变更为 待处理",
+      "time": "2026/7/8 09:42:23"
+    },
+    {
+      "id": "notice-mrbexuxy-u7rr5",
+      "title": "工单状态更新",
+      "content": "WO-20260708-009 已变更为 处理中",
+      "time": "2026/7/8 09:42:35"
+    },
+    {
+      "id": "notice-mrbexwub-uwdbd",
+      "title": "工单状态更新",
+      "content": "WO-20260708-009 已变更为 待确认",
+      "time": "2026/7/8 09:42:37"
+    },
+    {
+      "id": "notice-mrbf944k-ae70r",
+      "title": "异常巡检",
+      "content": "多媒体中控台 已自动生成维修工单 WO-20260708-010",
+      "time": "2026/7/8 09:51:20"
+    },
+    {
+      "id": "notice-mrbf9rna-ibcmy",
+      "title": "工单状态更新",
+      "content": "WO-20260708-010 已变更为 待派单",
+      "time": "2026/7/8 09:51:51"
+    },
+    {
+      "id": "notice-mrbf9svp-kngf2",
+      "title": "工单状态更新",
+      "content": "WO-20260708-010 已变更为 待处理",
+      "time": "2026/7/8 09:51:52"
+    },
+    {
+      "id": "notice-mrbfa1ll-oet08",
+      "title": "工单状态更新",
+      "content": "WO-20260708-010 已变更为 处理中",
+      "time": "2026/7/8 09:52:03"
+    },
+    {
+      "id": "notice-mrbfaizn-t1hlm",
+      "title": "工单状态更新",
+      "content": "WO-20260708-010 已变更为 待确认",
+      "time": "2026/7/8 09:52:26"
+    },
+    {
+      "id": "notice-mrbfgz4j-2e24k",
+      "title": "工单状态更新",
+      "content": "WO-20260705-001 已变更为 已完成",
+      "time": "2026/7/8 09:57:27"
+    },
+    {
+      "id": "notice-mrbfgzs3-bkeaw",
+      "title": "工单状态更新",
+      "content": "WO-20260708-009 已变更为 已完成",
+      "time": "2026/7/8 09:57:28"
+    },
+    {
+      "id": "notice-mrbfh0e4-zzvp8",
+      "title": "工单状态更新",
+      "content": "WO-20260708-010 已变更为 已完成",
+      "time": "2026/7/8 09:57:29"
+    },
+    {
+      "id": "notice-mrbfh9n3-9778p",
+      "title": "异常巡检",
+      "content": "多媒体中控台 已自动生成维修工单 WO-20260708-011",
+      "time": "2026/7/8 09:57:41"
+    },
+    {
+      "id": "notice-mrbfhj53-1whf0",
+      "title": "工单状态更新",
+      "content": "WO-20260708-011 已变更为 待派单",
+      "time": "2026/7/8 09:57:53"
+    },
+    {
+      "id": "notice-mrbfhk5l-8k3a1",
+      "title": "工单状态更新",
+      "content": "WO-20260708-011 已变更为 待处理",
+      "time": "2026/7/8 09:57:54"
+    },
+    {
+      "id": "notice-mrbfhs33-mqbt3",
+      "title": "工单状态更新",
+      "content": "WO-20260708-011 已变更为 处理中",
+      "time": "2026/7/8 09:58:04"
+    },
+    {
+      "id": "notice-mrbfhu9k-6zzfj",
+      "title": "工单状态更新",
+      "content": "WO-20260708-011 已变更为 待确认",
+      "time": "2026/7/8 09:58:07"
+    },
+    {
+      "id": "notice-mrbfi3a5-m39j0",
+      "title": "工单状态更新",
+      "content": "WO-20260708-011 已变更为 反馈未解决",
+      "time": "2026/7/8 09:58:19"
     }
   ],
   "roles": [
@@ -986,6 +1359,76 @@
       "target": "worker",
       "detail": "重置密码",
       "time": "2026/7/8 09:16:34"
+    },
+    {
+      "id": "audit-mrbejkwg-3x6mp",
+      "action": "user.delete",
+      "target": "u-mr992gft-evolg",
+      "detail": "删除用户",
+      "time": "2026/7/8 09:31:29"
+    },
+    {
+      "id": "audit-mrbejo14-35ci8",
+      "action": "user.delete",
+      "target": "u-mr99458z-xv50v",
+      "detail": "删除用户",
+      "time": "2026/7/8 09:31:33"
+    },
+    {
+      "id": "audit-mrbejqit-k4gkh",
+      "action": "user.delete",
+      "target": "u-mr9951n8-b5psc",
+      "detail": "删除用户",
+      "time": "2026/7/8 09:31:36"
+    },
+    {
+      "id": "audit-mrbewoqq-1k0ag",
+      "action": "user.resetPassword",
+      "target": "inspector",
+      "detail": "重置密码",
+      "time": "2026/7/8 09:41:40"
+    },
+    {
+      "id": "audit-mrbfibm7-wwnv4",
+      "action": "user.delete",
+      "target": "u-mr9951n8-b5psc",
+      "detail": "删除用户",
+      "time": "2026/7/8 09:58:30"
+    },
+    {
+      "id": "audit-mrbfiddh-r2wix",
+      "action": "user.delete",
+      "target": "u-mr99458z-xv50v",
+      "detail": "删除用户",
+      "time": "2026/7/8 09:58:32"
+    },
+    {
+      "id": "audit-mrbfipp8-mpp5a",
+      "action": "user.delete",
+      "target": "u-mr992gft-evolg",
+      "detail": "删除用户",
+      "time": "2026/7/8 09:58:48"
+    },
+    {
+      "id": "audit-mrbfiryo-k7r6i",
+      "action": "user.delete",
+      "target": "u-mr99458z-xv50v",
+      "detail": "删除用户",
+      "time": "2026/7/8 09:58:51"
+    },
+    {
+      "id": "audit-mrbfmwc5-1yw4f",
+      "action": "user.delete",
+      "target": "u-mr99458z-xv50v",
+      "detail": "删除用户",
+      "time": "2026/7/8 10:02:03"
+    },
+    {
+      "id": "audit-mrbfmyq8-dnocy",
+      "action": "user.delete",
+      "target": "u-mr9951n8-b5psc",
+      "detail": "删除用户",
+      "time": "2026/7/8 10:02:06"
     }
   ],
   "systemLogs": [],
@@ -1023,8 +1466,8 @@
   },
   "meta": {
     "storage": "json-file",
-    "revision": 60,
-    "savedAt": "2026-07-08T01:16:49.594Z"
+    "revision": 96,
+    "savedAt": "2026-07-08T02:02:06.810Z"
   },
   "templates": [
     {

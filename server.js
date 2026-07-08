@@ -116,7 +116,13 @@ function mergeById(remoteItems = [], incomingItems = []) {
 
 function mergeStateForWrite(remote, incoming) {
   const merged = { ...remote, ...incoming };
-  ["users", "roles", "auditLogs", "systemLogs"].forEach(name => {
+  // 数组直接使用 incoming 为准（支持删除操作），auditLogs/systemLogs 累加合并
+  const arrayKeys = ["users", "roles", "assets", "plans", "inspections", "workOrders", "logs", "notifications", "templates"];
+  arrayKeys.forEach(name => {
+    if (Array.isArray(incoming[name])) merged[name] = incoming[name];
+  });
+  // 审计日志和系统日志需要累加（不可删除）
+  ["auditLogs", "systemLogs"].forEach(name => {
     merged[name] = mergeById(remote[name], incoming[name]);
   });
   if (remote.meta) merged.meta = remote.meta;

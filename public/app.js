@@ -63,7 +63,10 @@ function mergeCollection(remoteItems = [], localItems = [], baseItems = []) {
     const remote = remoteById.get(id);
     const local = localById.get(id);
     const base = baseById.get(id);
-    if (!local) return remote;
+    if (!local) {
+      // 本地已删除：如果 base 中有（确认是删除操作），丢弃；否则是远端新增，保留
+      return base ? undefined : remote;
+    }
     if (!base) return local;
     if (!remote) return sameJson(local, base) ? undefined : local;
     return sameJson(local, base) ? remote : local;
@@ -251,6 +254,7 @@ function myInspections() {
   if (!list.length) return [];
   if (currentRole === "admin") return list;
   if (currentRole === "inspector") return list.filter(r => r.inspector === currentUserName());
+  if (currentRole === "reporter") return []; // 师生只看公示，不看运维记录
   const myOrders = myWorkOrders();
   const myAssetIds = new Set(myOrders.map(o => o.assetId));
   return list.filter(r => myAssetIds.has(r.assetId));
@@ -264,8 +268,22 @@ function myLogs() {
   const relevant = new Set();
   myOrders.forEach(o => { relevant.add(o.code); relevant.add(o.assetId); });
   const inspList = Array.isArray(state?.inspections) ? state.inspections : [];
-  inspList.filter(r => r.inspector === currentUserName()).forEach(r => relevant.add(r.id));
+  if (currentRole === "inspector") {
+    inspList.filter(r => r.inspector === currentUserName()).forEach(r => { if (r.workOrderId) relevant.add(r.workOrderId); relevant.add(r.id); });
+  }
   return list.filter(log => [...relevant].some(code => log.target === code || (log.content || "").includes(code)));
+}
+
+function myNotifications() {
+  const list = Array.isArray(state?.notifications) ? state.notifications : [];
+  if (!list.length) return [];
+  if (currentRole === "admin" || currentRole === "inspector") return list;
+  if (currentRole === "reporter") {
+    const myOrders = myWorkOrders();
+    const myCodes = new Set(myOrders.map(o => o.code));
+    return list.filter(n => [...myCodes].some(c => (n.content || "").includes(c)));
+  }
+  return list; // worker sees all for awareness
 }
 
 let authMode = "login";
@@ -745,6 +763,8 @@ function inspectionView() {
     const data = Object.fromEntries(new FormData(event.currentTarget).entries());
     const asset = state.assets.find(item => item.id === data.assetId);
     if (!asset) return alert("资产不存在");
+    const confirmed = await confirmInspection(asset, data);
+    if (!confirmed) return;
     let workOrderId = null;
     if (data.result === "ABNORMAL") {
       const code = `WO-${new Date().toISOString().slice(0, 10).replaceAll("-", "")}-${String(state.workOrders.length + 1).padStart(3, "0")}`;
@@ -769,13 +789,51 @@ function inspectionView() {
   });
 }
 
+function confirmInspection(asset, data) {
+  return new Promise(resolve => {
+    const mask = document.createElement("div");
+    mask.className = "modal-mask";
+    mask.innerHTML = `
+      <div class="modal-card" style="max-width:520px">
+        <div class="modal-head"><h2>确认巡检结果</h2></div>
+        <div class="modal-body">
+          <table>
+            <tr><td style="width:70px;color:var(--muted)">资产</td><td><strong>${asset.code} ${asset.name}</strong></td></tr>
+            <tr><td style="color:var(--muted)">位置</td><td>${asset.location}</td></tr>
+            <tr><td style="color:var(--muted)">结果</td><td>${data.result === "ABNORMAL" ? `<span class="tag danger">异常</span>` : `<span class="tag ok">正常</span>`}</td></tr>
+            <tr><td style="color:var(--muted)">描述</td><td>${data.description}</td></tr>
+            ${data.result === "ABNORMAL" ? `<tr><td style="color:var(--muted)">后续</td><td><span class="tag warn">将自动生成维修工单</span></td></tr>` : ""}
+          </table>
+          <div class="actions" style="margin-top:18px;justify-content:flex-end">
+            <button class="ghost cancel-confirm">返回修改</button>
+            <button class="primary ok-confirm">确认提交</button>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(mask);
+    mask.querySelector(".cancel-confirm").addEventListener("click", () => { mask.remove(); resolve(false); });
+    mask.querySelector(".ok-confirm").addEventListener("click", () => { mask.remove(); resolve(true); });
+    mask.addEventListener("click", e => { if (e.target === mask) { mask.remove(); resolve(false); } });
+  });
+}
+
 function nextActions(order) {
   const actions = [];
   if (currentRole === "admin" && order.status === "PENDING_ACCEPT") actions.push(["受理", "PENDING_ASSIGN"]);
   if (currentRole === "admin" && order.status === "PENDING_ASSIGN") actions.push(["确认派单", "PENDING_PROCESS"]);
   if (canCurrentWorkerHandle(order) && order.status === "PENDING_PROCESS") actions.push(["开始处理", "PROCESSING"]);
   if (canCurrentWorkerHandle(order) && order.status === "PROCESSING") actions.push(["submitResult", "submit"]);
+  // 师生确认自己报修的工单
   if (currentRole === "reporter" && order.status === "PENDING_CONFIRM") actions.push(["确认完成", "DONE"], ["反馈未解决", "FEEDBACK"]);
+  // 管理员可确认任意工单（包括巡检自动生成的"系统巡检"工单）
+  if (currentRole === "admin" && order.status === "PENDING_CONFIRM") actions.push(["确认完成(管理员)", "DONE"], ["反馈未解决", "FEEDBACK"]);
+  // 巡检员可确认自己巡检生成的工单
+  if (currentRole === "inspector" && order.status === "PENDING_CONFIRM" && order.reporter === "系统巡检") {
+    const inspList = Array.isArray(state?.inspections) ? state.inspections : [];
+    const myInsp = inspList.find(r => r.workOrderId === order.id && r.inspector === currentUserName());
+    if (myInsp) actions.push(["确认完成", "DONE"], ["维修不合格", "FEEDBACK"]);
+  }
   if (currentRole === "admin" && order.status === "FEEDBACK") actions.push(["重新受理", "PENDING_ASSIGN"]);
   return actions;
 }
@@ -875,10 +933,10 @@ function logsView() {
         </div>
       </div>
       <div class="panel">
-        <h3>实时通知 <span class="meta">共 ${state.notifications.length} 条</span></h3>
+        <h3>实时通知 <span class="meta">共 ${myNotifications().length} 条</span></h3>
         <div class="timeline">
-          ${state.notifications.map(item => `<div class="timeline-item"><div class="timeline-dot"></div><div><strong>${item.title}</strong><br><span>${item.content}</span><br><small>${item.time}</small></div></div>`).join("")}
-          ${state.notifications.length === 0 ? `<div class="empty">暂无通知</div>` : ""}
+          ${myNotifications().map(item => `<div class="timeline-item"><div class="timeline-dot"></div><div><strong>${item.title}</strong><br><span>${item.content}</span><br><small>${item.time}</small></div></div>`).join("")}
+          ${myNotifications().length === 0 ? `<div class="empty">暂无通知</div>` : ""}
         </div>
       </div>
     </section>
